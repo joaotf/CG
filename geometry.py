@@ -5,17 +5,21 @@
 import matplotlib.pyplot as plt
 import PySimpleGUI as sg
 import numpy as np
+from mpl_toolkits.mplot3d import axes3d
 import math
 
 pontos = np.array([
     [2,2,1,2,2.5,2.5,4,4,6.5,7.5,6.5,6.5,2], # X
-    [2.5,4.5,4.5,6,6,7,7,6,6,4.5,4.5,2.5,2.5] # Y
+    [2.5,4.5,4.5,6,6,7,7,6,6,4.5,4.5,2.5,2.5], # Y
 ])
 
 def Plot():
+    plt.grid()
+    plt.axis([0,50,0,100])
     plt.plot(pontos[0],pontos[1],color='purple')
     plt.scatter(pontos[0],pontos[1],color='blue')
     plt.show()
+
 
 sg.theme('DarkBlue3')   
 
@@ -45,14 +49,16 @@ while True:
             if(str(eixo).upper() == "X"):
                 for i in range(len(pontos[0])):
                     pontos[0][i] += int(quantidade)
+                Plot()
             if(str(eixo).upper() == "Y"):
                 for j in range(len(pontos[1])):
                     pontos[1][j] += int(quantidade)
+                Plot()
             if(str(eixo).upper() == "XY"):
                 for k in range(len(pontos[0])):
                     pontos[0][k] += int(quantidade)
                     pontos[1][k] += int(quantidade)
-            Plot()
+                Plot()
         
         except TypeError as identifier:
             pass
@@ -61,19 +67,24 @@ while True:
         multiplo = ''
         eixo = ''    
         try:
-            multiplo = sg.PopupGetText("Digite o Múltiplo Escalar")
             eixo = sg.PopupGetText("Digite o Eixo\nX\nY\nXY",title="Trabalho Louco do Casseb")
             if(str(eixo).upper() == "X"):
-                for i in range(len(pontos[0])):
+                multiplo = sg.PopupGetText("Digite o Múltiplo Escalar")
+                for i in range(0,len(pontos[0])):
                     pontos[0][i] *= int(multiplo)
+                Plot()
             if(str(eixo).upper() == "Y"):
-                for j in range(len(pontos[1])):
+                multiplo = sg.PopupGetText("Digite o Múltiplo Escalar")
+                for j in range(0,len(pontos[1])):
                     pontos[1][j] *= int(multiplo)
+                Plot()
             if(str(eixo).upper() == "XY"):
-                for k in range(len(pontos[0])):
-                    pontos[0][k] *= int(multiplo)
-                    pontos[1][k] *= int(multiplo)
-            Plot()
+                multiplox = sg.PopupGetText("Digite o Múltiplo Escalar de X")
+                multiploy = sg.PopupGetText("Digite o Múltiplo Escalar de Y")
+                for k in range(0,len(pontos[0])):
+                    pontos[0][k] *= int(multiplox)
+                    pontos[1][k] *= int(multiploy)
+                Plot()
         
         except TypeError as identifier:
             pass
@@ -85,14 +96,16 @@ while True:
             if(str(eixo).upper() == "X"):
                 for i in range(len(pontos[0])):
                     pontos[0][i] *= -1;
+                Plot()
             if(str(eixo).upper() == "Y"):
                 for j in range(len(pontos[1])):
                     pontos[1][j] *= -1;
+                Plot()
             if(str(eixo).upper() == "XY"):
                 for k in range(len(pontos[0])):
                     pontos[0][k] *= -1;
                     pontos[1][k] *= -1;
-            Plot()
+                Plot()
         
         except TypeError as identifier:
             pass
@@ -105,10 +118,12 @@ while True:
             if(str(eixo).upper() == "H"):
                 for i in range(len(pontos[0])):
                     pontos[0][i] = float(pontos[0][i]) * math.cos(float(grau)) + float(pontos[1][i]) * math.sin(float(grau))
+                    pontos[0][i] = float(pontos[0][i]) * math.sin(float(grau)) - float(pontos[1][i]) * math.cos(float(grau))
                 Plot()
             if(str(eixo).upper() == "AH"):
                 for i in range(len(pontos[1])):
-                    pontos[0][i] = float(pontos[0][i]) * math.cos(float(grau)) - float(pontos[1][i]) * math.sin(float(grau))
+                    pontos[0][i] = float(pontos[0][i]) * math.cos(float(grau)) + float(pontos[1][i]) * math.sin(float(grau))
+                    pontos[0][i] = float(pontos[0][i]) * math.sin(float(grau)) - float(pontos[1][i]) * math.cos(float(grau))
                 Plot()
             
         except TypeError as identifier:
