@@ -110,20 +110,19 @@ while True:
         except TypeError as identifier:
             pass
 
-    if(event == "Rotação - rotacionar objeto no sentido horário e/ou anti-horário"):
-        sentido = ''    
+    if(event == "Rotação - rotacionar objeto no sentido horário e/ou anti-horário"): 
         try:
             eixo = sg.PopupGetText("Digite o Sentido da Rotação",title="Trabalho Louco do Casseb")
             grau = sg.PopupGetText("Graus",title="Trabalho Louco do Casseb")
             if(str(eixo).upper() == "H"):
                 for i in range(len(pontos[0])):
-                    pontos[0][i] = float(pontos[0][i]) * math.cos(float(grau)) + float(pontos[1][i]) * math.sin(float(grau))
-                    pontos[0][i] = float(pontos[0][i]) * math.sin(float(grau)) - float(pontos[1][i]) * math.cos(float(grau))
+                    pontos[0][i] = (float(pontos[0][i]) * math.cos(float(grau))) - (pontos[1][i] * math.sin(float(grau)))
+                    pontos[1][i] = (float(pontos[0][i]) * math.sin(float(grau))) + (float(pontos[1][i]) * math.cos(float(grau)))
                 Plot()
             if(str(eixo).upper() == "AH"):
                 for i in range(len(pontos[1])):
-                    pontos[0][i] = float(pontos[0][i]) * math.cos(float(grau)) + float(pontos[1][i]) * math.sin(float(grau))
-                    pontos[0][i] = float(pontos[0][i]) * math.sin(float(grau)) - float(pontos[1][i]) * math.cos(float(grau))
+                    pontos[0][i] = (float(pontos[0][i]) * math.cos(-float(grau))) - (pontos[1][i] * math.sin(-float(grau)))
+                    pontos[1][i] = (float(pontos[0][i]) * math.sin(-float(grau))) + (float(pontos[1][i]) * math.cos(-float(grau)))
                 Plot()
             
         except TypeError as identifier:
@@ -133,3 +132,4 @@ while True:
         Plot()
 
 window.close()
+
