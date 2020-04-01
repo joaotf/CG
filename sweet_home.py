@@ -3,7 +3,7 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import numpy as np
 import PySimpleGUI as sg
-import math
+from math import cos,sin
 import sys
 
 
@@ -35,11 +35,6 @@ def Translacao(tecla):
             pontos[0][y] += 1;
 
 
-def Rotacao(angulo):
-    for y in range(len(pontos[0])):
-        pontos[0][y] = (pontos[0][y] * math.cos(angulo)) - (pontos[1][y] * math.sin(angulo))
-        pontos[1][y] = (pontos[0][y] * math.sin(angulo)) + (pontos[1][y] * math.cos(angulo))
-
 def Espelhamento(tecla):
     for x in range(len(pontos[0])):
         if(tecla.decode('utf-8') == '7'):
@@ -59,13 +54,12 @@ def Cisalhamento(tecla):
 
 
 def KeyBoard(tecla,x,y):
-    print(tecla)
     if(tecla == 36): # F12
         sys.exit(0)
     if(tecla.decode('utf-8') == 'n' or tecla.decode('utf-8') == 'N'):
-        Rotacao(-2)
+        glRotatef(5,0,0,1);
     if(tecla.decode('utf-8') == 'm' or tecla.decode('utf-8') == 'M'):
-        Rotacao(2)
+        glRotatef(-5,0,0,1);
     
     Escala(tecla)
     Translacao(tecla)
@@ -92,12 +86,17 @@ def refresh():
     glLoadIdentity()
     gluOrtho2D(-win,win,-win,win)
     glMatrixMode(GL_MODELVIEW)
-                            
+
+print("N -> Rotação Sentido Antihorário\nM -> Rotação Sentido Horário")
+print("\n7 -> Espelhamento em X\n1 -> Espelhamento em Y\n")
+print("8 6 4 2 -> Translação\n")
+print("K -> Cisalhamento em X\nL -> Cisalhamento em Y\n")
+print("O -> Escala ++\nI -> Escala --")             
 glutInit()
 glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB)
-glutInitWindowSize(720, 720)                      # set window size
-glutInitWindowPosition(300, 300)                           # set window position
-glutCreateWindow("Second App on OpenGL")              # create window with title
+glutInitWindowSize(720, 720)                    
+glutInitWindowPosition(300, 300)                        
+glutCreateWindow("Sweet Home")              
 glutDisplayFunc(Draw_The_Home) 
 glutKeyboardFunc(KeyBoard)  
 refresh()
