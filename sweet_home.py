@@ -14,11 +14,11 @@ pontos = np.array([
 
 def Escala(tecla):
     for x in range(len(pontos[0])):
-        if(tecla.decode('utf-8') == 'o'):
+        if(tecla.decode('utf-8') == 'o' or tecla.decode('utf-8') == 'O'):
             pontos[0][x] *= 1.5;
             pontos[1][x] *= 1.5;
         
-        if(tecla.decode('utf-8') == 'i'):
+        if(tecla.decode('utf-8') == 'i' or tecla.decode('utf-8') == 'I'):
             pontos[0][x] /= 2.0;
             pontos[1][x] /= 2.0;
 
@@ -44,11 +44,11 @@ def Espelhamento(tecla):
 
 def Cisalhamento(tecla):
     for x in range(len(pontos[0])):
-        if(tecla.decode('utf-8') == 'k'):
+        if(tecla.decode('utf-8') == 'k' or tecla.decode('utf-8') == 'K'):
             if(x == 0 or x == len(pontos[0]) -1): continue;
             pontos[0][x] += 2;
 
-        if(tecla.decode('utf-8') == 'l'):
+        if(tecla.decode('utf-8') == 'l' or tecla.decode('utf-8') == 'L'):
             if(x == 0 or x == len(pontos[0]) -1): continue;
             pontos[1][x] += 2;
 
@@ -81,21 +81,21 @@ def Draw_The_Home():
 
 def refresh():
     glClearColor(0.0,0.0,0.0,1.0)
-    win = 10.0
+    var = 10.0
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluOrtho2D(-win,win,-win,win)
+    gluOrtho2D(-var,var,-var,var)
     glMatrixMode(GL_MODELVIEW)
 
 print("N -> Rotação Sentido Antihorário\nM -> Rotação Sentido Horário")
 print("\n7 -> Espelhamento em X\n1 -> Espelhamento em Y\n")
 print("8 6 4 2 -> Translação\n")
 print("K -> Cisalhamento em X\nL -> Cisalhamento em Y\n")
-print("O -> Escala ++\nI -> Escala --")             
+print("O -> Escala ++\nI -> Escala --")     
 glutInit()
 glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB)
-glutInitWindowSize(720, 720)                    
-glutInitWindowPosition(300, 300)                        
+glutInitWindowSize(600, 600)                    
+glutInitWindowPosition(200, 200)
 glutCreateWindow("Sweet Home")              
 glutDisplayFunc(Draw_The_Home) 
 glutKeyboardFunc(KeyBoard)  
